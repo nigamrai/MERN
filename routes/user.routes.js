@@ -1,0 +1,14 @@
+import express from 'express';
+import upload from '../middlewares/multer.middleware';
+const router=express.Router();
+import { userController } from '../controllers';
+import { isLoggedIn } from '../middlewares/auth.middleware';
+router.post('/register',upload.single('avatar'),userController.register);
+router.post('/login',userController.login);
+router.get('/logout',userController.logout);
+router.get('/me',isLoggedIn,userController.getProfiles);
+router.post('/forgot-password',userController.forgotPassword);
+router.post('/reset-password/:resetToken',userController.resetPassword);
+router.post('/change-password',isLoggedIn,userController.changePassword);
+router.put('/update-user',isLoggedIn,upload.single('avatar'),userController.updateUser);
+export default router;
